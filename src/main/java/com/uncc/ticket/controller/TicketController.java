@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.security.Principal;
+import java.util.Map;
 
 @Controller
 public class TicketController {
@@ -53,13 +54,18 @@ public class TicketController {
     @RequestMapping(value = "/tickets/edit/{id}", method = RequestMethod.GET)
     public String editTicket(Model model,@PathVariable("id") Long id) {
         // Code here
-        return "redirect:/"; //Remove this line
+        //model.mergeAttributes(model.asMap());
+
+        model.addAttribute("ticket", ticketService.findById(id));
+        return "tickets/storeTicket";
+        //return "redirect:/";
     }
 
     @RequestMapping(value = "/tickets/delete/{id}", method = RequestMethod.GET)
     public String deleteTicket(@PathVariable("id") Long id) {
-        // Code here
-        return "redirect:/";
+         // Code here
+         ticketService.deleteById(id);
+         return "redirect:/";
     }
 
 }
